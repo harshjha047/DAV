@@ -7,9 +7,9 @@ const mono = JetBrains_Mono({ subsets: ['latin'], weight: ['400', '500'], variab
 
 export const metadata = {
   title: 'DAV Networks — Fast, unlimited fiber broadband',
-  description: 'Unlimited fiber internet plans from ₹499/month. 100–500 Mbps with a local DAV Networks team. Call or WhatsApp +91 70116 28810.',
-  metadataBase: new URL('https://devnetworks.in'),
-  openGraph: { title: 'DAV Networks — Fiber broadband', description: 'Unlimited fiber plans from ₹499/month.', url: 'https://devnetworks.in', siteName: 'DAV Networks', locale: 'en_IN', type: 'website' },
+  description: 'Unlimited fiber internet plans from ₹499/month. 100–500 Mbps with a local DAV Networks team. Serving Noida Sector 62 and Khora, Ghaziabad. Call or WhatsApp +91 70116 28810.',
+  metadataBase: new URL('https://davnetworks.in'),
+  openGraph: { title: 'DAV Networks — Fiber broadband', description: 'Unlimited fiber plans from ₹499/month.', url: 'https://davnetworks.in', siteName: 'DAV Networks', locale: 'en_IN', type: 'website' },
 };
 
 export const viewport = { width: 'device-width', initialScale: 1, themeColor: '#12295C' };

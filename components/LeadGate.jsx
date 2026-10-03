@@ -20,7 +20,7 @@ const inputCls = 'min-h-[50px] rounded-xl border-[1.5px] border-line-strong bg-w
 export default function LeadGate() {
   const [modal, setModal] = useState(null); // { kind, href }
   const [step, setStep] = useState('form');
-  const [lead, setLead] = useState({ name: '', phone: '', email: '' });
+  const [lead, setLead] = useState({ name: '', phone: '', email: '', consent: false });
   const [err, setErr] = useState({});
   const [saving, setSaving] = useState(false);
   const [sendError, setSendError] = useState('');
@@ -65,8 +65,9 @@ export default function LeadGate() {
     if (name.length < 2) e2.name = 'Please enter your name.';
     if (!/^[6-9]\d{9}$/.test(digits)) e2.phone = 'Enter a valid 10-digit mobile number.';
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e2.email = 'Enter a valid email address.';
+    if (!lead.consent) e2.consent = 'Please tick the box to continue.';
     if (Object.keys(e2).length) return setErr(e2);
-    const clean = { name, email, phone: digits };
+    const clean = { name, email, phone: digits, consent: true, consentAt: new Date().toISOString() };
     setErr({}); setSaving(true); setSendError('');
     try {
       await logLead({ ...clean, action: modal.kind, message: msgFrom(modal.href) });
@@ -109,11 +110,19 @@ export default function LeadGate() {
               <Field label="Email" error={err.email}>
                 <input type="email" name="email" autoComplete="email" placeholder="you@example.com" value={lead.email} onChange={(e) => setLead({ ...lead, email: e.target.value })} className={inputCls} />
               </Field>
+              <label className="flex cursor-pointer items-start gap-3">
+                <input type="checkbox" checked={lead.consent} onChange={(e) => setLead({ ...lead, consent: e.target.checked })} className="mt-px h-[22px] w-[22px] flex-none accent-orange" />
+                <span className="text-[13px] leading-normal text-body">
+                  I agree to DAV Networks storing my details and contacting me about a broadband connection, as described in the{' '}
+                  <a href="/privacy" target="_blank" className="font-bold">Privacy Notice</a>. I am 18 or older and can withdraw consent anytime.
+                </span>
+              </label>
+              {err.consent && <span className="text-[13px] text-error">{err.consent}</span>}
               {sendError && <span className="text-[13px] text-error">{sendError}</span>}
               <button type="submit" disabled={saving} className="mt-1.5 min-h-[52px] rounded-[14px] border-0 bg-orange text-base font-extrabold text-white disabled:opacity-70">
                 {saving ? 'Saving…' : isCall ? 'Continue to call' : 'Continue to WhatsApp'}
               </button>
-              <span className="text-center text-xs text-muted">We only use your details to contact you about your connection.</span>
+              <span className="text-center text-xs text-muted">Data is stored securely with Google Sheets. <a href="/grievance" target="_blank">Grievance contact</a></span>
             </form>
           </>
         ) : (

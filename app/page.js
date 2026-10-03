@@ -1,9 +1,11 @@
 import Image from 'next/image';
+import Link from 'next/link';
+import { policies } from '@/lib/policies';
 import Header, { Logo } from '@/components/Header';
 import Faq from '@/components/Faq';
 import LeadGate from '@/components/LeadGate';
 import {
-  PHONE, EMAIL, telHref, waHref, waRouter, waArea,
+  PHONE, EMAIL, SITE_URL, ADDRESS, ADDRESS_LINES, HOURS, telHref, waHref, waRouter, waArea,
   plans, useCases, factors, why, areas, steps, testimonials, SHOW_TESTIMONIALS,
 } from '@/lib/site';
 
@@ -213,11 +215,11 @@ export default function Home() {
             <div className="flex flex-col gap-3 rounded-[26px] bg-orange px-9 py-10 text-white">
               <div className="flex h-[52px] w-[52px] items-center justify-center rounded-full bg-white"><span className="h-4 w-4 rounded-full bg-orange" /></div>
               <div className="mt-4 text-sm text-orange-pale">DAV Networks office</div>
-              <div className="font-display text-[28px] font-extrabold leading-[1.15]">Office address line</div>
-              <div className="text-[15px] text-orange-pale">City — PIN code</div>
+              <div className="font-display text-2xl font-extrabold leading-[1.2]">{ADDRESS_LINES[0]}, {ADDRESS_LINES[1]}</div>
+              <div className="text-[15px] text-orange-pale">{ADDRESS_LINES[2]}</div>
               <div className="my-3.5 h-px bg-white/30" />
-              <div className="text-[15px]">Mon–Sun · 9 AM – 9 PM</div>
-              <div className="text-[15px]">devnetworks.in</div>
+              <div className="text-[15px]">{HOURS}</div>
+              <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ADDRESS)}`} target="_blank" rel="noopener" className="text-[15px] font-bold text-white underline underline-offset-4 hover:text-orange-pale">Open in Google Maps →</a>
             </div>
           </div>
         </section>
@@ -310,14 +312,20 @@ export default function Home() {
               <div className="mb-1 font-bold text-white">Contact</div>
               <a href={telHref} className="text-navy-soft hover:text-white">Call: {PHONE}</a>
               <a href={waHref} target="_blank" rel="noopener" className="text-wa-light hover:text-white">WhatsApp: {PHONE}</a>
-              <span>Office address line, City</span>
+              <span className="leading-normal">{ADDRESS}</span>
               <a href={`mailto:${EMAIL}`} className="text-navy-soft hover:text-white">{EMAIL}</a>
-              <a href="https://devnetworks.in" className="text-orange-peach">devnetworks.in</a>
+              <a href={SITE_URL} className="text-orange-peach">davnetworks.in</a>
             </div>
           </div>
           <div className="mt-12 flex flex-wrap justify-between gap-3 border-t border-navy-rule pt-[22px] text-[13px]">
-            <span>© {new Date().getFullYear()} DAV Networks. All rights reserved.</span>
-            <span>Built for life at full speed.</span>
+            <span>© {new Date().getFullYear()} DAV Networks. All claims reserved.</span>
+            <nav className="flex flex-wrap gap-x-[18px] gap-y-2">
+              {policies.map((x) => (
+                <Link key={x.slug} href={`/${x.slug}`} className="text-navy-soft hover:text-white">{x.title}</Link>
+              ))}
+            </nav>
+            <span>{"</>"} Powered by DIV.</span>
+
           </div>
         </div>
       </footer>

@@ -18,8 +18,14 @@ npm run build && npm start         # production
 - `components/LeadGate.jsx` — name/phone/email popup shown before any Call or WhatsApp click; posts to every Google Sheet in `SHEET_ENDPOINTS`, remembers the visitor in localStorage
 - `tailwind.config.js` — brand colors, fonts, breakpoints (`sheet` 600, `nav` 900, `plans` 1100)
 
+## Legal pages
+`/privacy`, `/grievance`, `/cookies`, `/terms`, `/refund` — all content lives in `lib/policies.js`. Have a lawyer review before going live. The popup form requires the consent checkbox; `consent` and `consentAt` are sent to the sheets.
+
 ## Images
-Place `hero.jpg`, `router.webp` and `why.jpg` in `/public` — they are loaded via `next/image` in `app/page.js`.
+`hero.jpg`, `router.webp` and `why.jpg` live in `/public` (already in the repo).
 
 ## Deploy
 Push to GitHub and import in Vercel. Set `NEXT_PUBLIC_PHONE` and `NEXT_PUBLIC_SHEET_ENDPOINTS` (comma-separated) in the project's environment variables if you want to override the defaults.
+
+## Testimonials
+Hidden until you add real quotes to `testimonials` in `lib/site.js` — the section then appears automatically.
